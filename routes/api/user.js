@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const CryptoJS = require("crypto-js");
-const User = require('../../database/model_user');
 
 router.post('/register', (req, res) => {
     var userName = req.query.userName;
@@ -30,7 +29,3 @@ router.post('/register', (req, res) => {
 });
 
 module.exports = router;
-
-
-// mongoose
-// waterline

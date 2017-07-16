@@ -72,18 +72,9 @@ var config = {
         // ],
         // vendor: ["_", "jquery", "react", "react-dom", "react-redux", "redux"],
         
-        // test 
-
         // font-end
         index: './public/src/js/pages/index.jsx',
-        // register: './public/src/js/register.js',
-        // index:  './public/src/js/index.js',
-        // product:  './public/src/js/product/product.js',
-        // showproduct:  './public/src/js/product/showproduct.js',
-
-        // admin 
-        // "admin/login":  './public/src/js/admin/login.jsx',
-        // "admin/index":  './public/src/js/admin/index.jsx'
+        
     },
     output: {
         path: __dirname + '/public/dist/',
