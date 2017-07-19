@@ -32,12 +32,12 @@ var webpackConfig = require('./webpack.config');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'public/dist/html'));
+app.set('views', path.join(__dirname, 'views'));
 app.engine("html", ejs.renderFile);
 app.set('view engine', 'html');
 
 // uncomment after placing your favicon in /public
-// app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'public/src/images', 'favicon.ico')));
 // app.use(logger('dev'));
 
 app.use(bodyParser.json());

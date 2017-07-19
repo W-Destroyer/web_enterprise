@@ -1,17 +1,30 @@
 var request = require('request');
 
-var hostConf = {
-    url: 'loalhost',
-    port: '8080'
-};
+var nwsConf = require('../config/nws.config');
 
+// class Nws {
+//     get(options, data) {
+//         return new Promise((resolve, reject) => {
+//             request.get()
+//         })
+//     }
+//     post(options, data) {
+//         return new Promise((resolve, reject) => {
 
-module.exports = function(route, data) {
-    return new Promise(resolve, reject) {
-        requset(url + api, data, (err, result) => {
+//         })
+//     }
+// }
+
+// module.exports = Nws;
+
+module.exports = function(options, data) {
+    // var opts = {};
+    var url = nwsConf.url + options;
+    return new Promise((resolve, reject) => {
+        request(url, data, (err, result) => {
             if(err)
                 return reject(err);
             resolve(result);
         });
-    }
+    })
 }

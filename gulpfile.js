@@ -5,7 +5,7 @@ const cleanCss = require('gulp-clean-css');
 const clean = require('gulp-clean');
 const watch = require('gulp-watch');
 const Path = require('path');
-// const webpack = require('webpack');
+const webpack = require('webpack');
 const gutil = require('gulp-util');
 const shell = require('gulp-shell');
 // var rev = require('gulp-rev');
@@ -95,7 +95,7 @@ gulp.task('webpack', (cb) => {
 
 
 gulp.task("express", shell.task([
-    'supervisor -i public -w routes,app.js,utils,database,config -- ./bin/www --dev'
+    'supervisor -i public -w routes,app.js,utils,config -- ./bin/www --dev'
     // 'supervisor -i public -w routes,app.js,utils,database,config -- ./bin/www --dev NODE_ENV=development '
 ]));
 

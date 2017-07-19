@@ -53,15 +53,14 @@ export default class extends Component {
     }
 
     render() {
+        var title = this.props.data.title;
         return (
             <Header ref='header' className="header" >
                 <div ref="title" className="title" >
                     <div ref='logo' className="logo">
                         <img src="/images/logo.png" style={{height: '100%'}}/>                        
                     </div>
-                    <div ref="companyName" className="company-name">
-                        艾麦达科技有限公司
-                    </div>
+                    <div ref="companyName" className="company-name">{ title }</div>
                 </div>
                 <div ref='nav' className="nav" >
                     <div className="logo"></div>
@@ -69,12 +68,12 @@ export default class extends Component {
                         lineHeight: '64px',
                     }} >
                         <Menu.Item key="1"><a href="/">网站首页</a></Menu.Item>
-                        <Menu.Item key="2"><a href="/">公司简介</a></Menu.Item>
-                        <Menu.Item key="3"><a href="/">产品展厅</a></Menu.Item>
-                        <Menu.Item key="4"><a href="/">新闻中心</a></Menu.Item>
-                        <Menu.Item key="5"><a href="/">售后服务</a></Menu.Item>
-                        <Menu.Item key="6"><a href="/">在线留言</a></Menu.Item>
-                        <Menu.Item key="7"><a href="/ ">联系我们</a></Menu.Item>
+                        <Menu.Item key="2"><a href="/about">公司简介</a></Menu.Item>
+                        <Menu.Item key="3"><a href="/product">产品展厅</a></Menu.Item>
+                        <Menu.Item key="4"><a href="/news">新闻中心</a></Menu.Item>
+                        <Menu.Item key="5"><a href="/service">售后服务</a></Menu.Item>
+                        <Menu.Item key="6"><a href="/messages">在线留言</a></Menu.Item>
+                        <Menu.Item key="7"><a href="/contact ">联系我们</a></Menu.Item>
                     </Menu>
                 </div>
             </Header>

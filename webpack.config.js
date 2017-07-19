@@ -106,7 +106,7 @@ var config = {
         // noParse: [/public\/src\/js_components\/react\/react.js/, /public\/src\/js_components\/react\/react-dom.js/]
         // noParse: [/node_modules\/redux\/dist\/redux.js/, /node_modules\/react-redux\/dist\/react-redux.js/]
     },
-    devtool: "inline-source-map",
+    // devtool: "inline-source-map",
     externals: {
         'react': 'React',
         'react-dom': 'ReactDOM',
@@ -149,10 +149,10 @@ var config = {
     plugins: webpackPlugins
 }
 
-if(os.platform() !== 'darwin' && os.platform() !== 'linux') {
-    config.resolve.extensions.unshift('');
-} else if(os.platform() === 'win32') {
-    config.resolve.extensions.unshift('');
-}
+// if(os.platform() !== 'darwin' && os.platform() !== 'linux') {
+//     config.resolve.extensions.unshift('');
+// } else if(os.platform() === 'win32') {
+//     config.resolve.extensions.unshift('');
+// }
 
 module.exports = config;

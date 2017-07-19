@@ -24,9 +24,17 @@ class App extends Component {
     }
 
     render() {
+        var data = this.props.data;
+        console.log(data);
+        var headerData = {
+            title: data.baseinfo.title
+        }
+        var footerData = {
+            firendLink: data.baseinfo.friendLink
+        }
         return(
             <Layout style={{backgroundColor: "#fff"}}>
-                <Header />
+                <Header data={headerData}/>
                 <Content style={{marginTop: 164}}>
                     <Banner />
                     <div style={{
@@ -40,28 +48,19 @@ class App extends Component {
                         <div className="row">
                             <Product />
                         </div>
-                        <div className="row">
-                            <Row type="flex" justify="center">
-                                <Col span={24}>
-                                    <div className="streamer" style={{
-                                        textAlign: 'center',
-                                        lineHeight: 0,
-                                    }}>
-                                        <img src='/images/streamer.jpeg' style={{width: '100%'}}/>
-                                    </div>
-                                </Col>
-                            </Row>
-                        </div>
-                        <div className="row"></div>
+                        
                         <div className="row">
                             <News />
                         </div>
                         <div className="row">
                             <AboutUS />
                         </div>
+                        <div className="row">
+                            <Partner />
+                        </div>
                     </div>
                 </Content>
-                <Footer />
+                <Footer data={footerData}/>
                 <div id="components-back-top-custom">
                     <BackTop />
                 </div>
@@ -70,12 +69,24 @@ class App extends Component {
     }
 }
 
-ReactDOM.render(<App />, document.getElementById('main'));
+class Partner extends Component {
+    constructor() {
+        super();
+    }
 
-// <div className="ant-back-top-inner">UP</div>/
-    
-// <Breadcrumb style={{ margin: '12px 0' }}>
-//     <Breadcrumb.Item>Home</Breadcrumb.Item>
-//     <Breadcrumb.Item>List</Breadcrumb.Item>
-//     <Breadcrumb.Item>App</Breadcrumb.Item>
-// </Breadcrumb>
+    render() {
+
+        return (
+            <div className="container about row-body">
+                <header >
+                    合作伙伴
+                </header>
+                <p className="describe">
+                    我们致力于让科技改善人们的生活
+                </p>
+            </div>
+        )
+    }
+}
+
+ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));
