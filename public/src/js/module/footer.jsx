@@ -5,7 +5,7 @@
 
 import React, { Component } from 'react';
 
-import { Layout, Menu, Breadcrumb, Row, Col } from 'antd';
+import { Layout, Menu, Breadcrumb, Row, Col, Icon } from 'antd';
 const { Footer } = Layout;
 
 export default class extends Component {
@@ -53,9 +53,19 @@ export default class extends Component {
                                 </ul>
                             </Col>
                             <Col span={6} offset={1}>
-                                <div>400-000-000</div>
-                                <div>周一至周五 08:30~17:30</div>
-                                <div><span>微信</span><span>微博</span><span>QQ</span></div>
+                                <div style={{lineHeight: '40px', height: "40px"}}>
+                                    <a href="tel:15170454792" titel="15170454792" style={{fontSize: "28px", color: "#5e7387"}}>15170454792</a>
+                                </div>
+                                <div style={{color: "#aaa", marginBottom: "10px"}}>周一至周五 08:30~17:30</div>
+                                <div style={{
+                                    display: 'flex',
+                                    justifyContent: 'space-around',
+                                    padding: '0 25%',
+                                }}>
+                                    <a href="http://wpa.qq.com/msgrd?v=3&uin=&site=qq&menu=yes" target="_blank"><i className="iconfont icon-qq" style={{color: '#4E94E8', fontSize: '24px'}}></i></a>
+                                    <a href="/"><i className="iconfont icon-weixin" style={{color: '#70B12D', fontSize: '24px'}}></i></a>
+                                    <a href="/"><i className="iconfont icon-weibo" style={{color: '#F84E52', fontSize: '24px'}}></i></a>
+                                </div>
                             </Col>
                         </Row>
                     </div>

@@ -55,9 +55,7 @@ class App extends Component {
                         <div className="row">
                             <AboutUS />
                         </div>
-                        <div className="row">
-                            <Partner />
-                        </div>
+                        
                     </div>
                 </Content>
                 <Footer data={footerData}/>
@@ -84,9 +82,24 @@ class Partner extends Component {
                 <p className="describe">
                     我们致力于让科技改善人们的生活
                 </p>
+                <div className="news-list" style={{marginTop: '30px'}}>
+                    <Row type="flex" justify="left" gutter={20}>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>1</Col>
+                        <Col span={3}>2</Col>
+                        <Col span={3}>2</Col>
+                        <Col span={3}>2</Col>
+                        <Col span={3}>2</Col>
+                    </Row>
+                </div>
             </div>
         )
     }
 }
+
 
 ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));

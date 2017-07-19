@@ -30,27 +30,93 @@ router.get('/', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 router.get('/product', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 router.get('/news', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 router.get('/service', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 router.get('/messages', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 router.get('/contact', (req, res) => {
-    res.render('index', { title: '网站首页 - 江西艾麦达科技'});
+    res.render('index', {
+        title: '网站首页 - 江西艾麦达科技',
+        initialProps: {
+            baseinfo: {
+                title: '江西艾麦达科技',
+                friendLink: [],
+                phone: ''
+            },
+            // bannerList: bannerList,
+            // classList: classList
+        }
+    });
 });
 
 module.exports = router;
