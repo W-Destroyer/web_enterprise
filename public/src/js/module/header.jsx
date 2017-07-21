@@ -18,6 +18,28 @@ export default class extends Component {
     state = {
         titleHeight: 100,
         navHeight: 64,
+        navList: [{
+            name: '网站首页',
+            pathname: '/'
+        }, {
+            name: '公司简介',
+            pathname: '/about'
+        }, {
+            name: '产品展厅',
+            pathname: '/product'
+        }, {
+            name: '新闻中心',
+            pathname: '/news'
+        }, {
+            name: '售后服务',
+            pathname: '/service'
+        }, {
+            name: '在线留言',
+            pathname: '/messages'
+        }, {
+            name: '联系我们',
+            pathname: '/contact'
+        }]
     }
 
     fixedTop() {
@@ -54,6 +76,15 @@ export default class extends Component {
 
     render() {
         var title = this.props.data.title;
+        var pathname = window.location.pathname;
+        var defaultSeletedKey = [];
+        var navListDom = this.state.navList.map((item, index) => {
+            if(pathname = item.pathname)
+                defaultSeletedKey.push(index);
+            return (
+                <Menu.Item key={index}><a href={item.path}>{item.name}</a></Menu.Item>
+            )
+        })
         return (
             <Header ref='header' className="header" >
                 <div ref="title" className="title" >
@@ -64,16 +95,10 @@ export default class extends Component {
                 </div>
                 <div ref='nav' className="nav" >
                     <div className="logo"></div>
-                    <Menu theme="light" mode="horizontal" defaultSelectedKeys={['1']} style={{ 
+                    <Menu theme="light" mode="horizontal" defaultSelectedKeys={defaultSeletedKey} style={{ 
                         lineHeight: '64px',
                     }} >
-                        <Menu.Item key="1"><a href="/">网站首页</a></Menu.Item>
-                        <Menu.Item key="2"><a href="/about">公司简介</a></Menu.Item>
-                        <Menu.Item key="3"><a href="/product">产品展厅</a></Menu.Item>
-                        <Menu.Item key="4"><a href="/news">新闻中心</a></Menu.Item>
-                        <Menu.Item key="5"><a href="/service">售后服务</a></Menu.Item>
-                        <Menu.Item key="6"><a href="/messages">在线留言</a></Menu.Item>
-                        <Menu.Item key="7"><a href="/contact ">联系我们</a></Menu.Item>
+                        { navListDom }
                     </Menu>
                 </div>
             </Header>

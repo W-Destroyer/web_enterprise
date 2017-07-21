@@ -1,30 +1,10 @@
-var request = require('request');
+const nwsConf = require('../config/nws.config');
 
-var nwsConf = require('../config/nws.config');
-
-// class Nws {
-//     get(options, data) {
-//         return new Promise((resolve, reject) => {
-//             request.get()
-//         })
-//     }
-//     post(options, data) {
-//         return new Promise((resolve, reject) => {
-
-//         })
-//     }
-// }
-
-// module.exports = Nws;
-
-module.exports = function(options, data) {
-    // var opts = {};
-    var url = nwsConf.url + options;
-    return new Promise((resolve, reject) => {
-        request(url, data, (err, result) => {
-            if(err)
-                return reject(err);
-            resolve(result);
-        });
-    })
+module.exports = function(url, path) {
+    // var api
+    if(url === undefined && path === undefined)
+        return new Error('url is not null');
+    if(path === undefined)
+        return nwsConf.url + url;
+    return url + path
 }

@@ -1,19 +1,38 @@
 var express = require('express');
 var router = express.Router();
 var async = require('async');
-
+var request = require('request');
 var nws = require('../nws/nws');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    // var pageData = {};
-    // var getBaseinfo = cb => nws('/getBaseinfo').then(data => cb(null, data)).catch(err => cb(err));
-    // var getBanner = cb => nws('/getBanner').then(data => cb(null, data)).catch(err => cb(err));
-    // var getClassList = cb => nws('/getClassList').then(data => cb(null, data)).catch(err => cb(err));
-    // async.parallel([getBaseinfo, getBanner, getClassList], (err, result) => {
-    //     var baseinfo = result[0].body;
-    //     var bannerList = result[1].body;
-    //     var classList = result[2].body;
+    // var getBaseinfo = cb => {
+    //     request(nws('/getBaseinfo'), (err, result) => {
+    //         if(err) 
+    //             return cb(err);
+    //         cb(null, result);
+    //     })
+    // }
+    // var getBanner = cb => {
+    //     request(nws('/getBaseinfo'), (err, result) => {
+    //         if(err) 
+    //             return cb(err);
+    //         cb(null, result);
+    //     })
+    // }
+    var getFriendLinkList = cb => {
+        request(nws('/sysconfig/getFriendLink'), (err, result) => {
+            if(err) 
+                return cb(err);
+            cb(null, result);
+        })
+    }
+    
+    async.parallel([getFriendLinkList], (err, result) => {
+        console.log(err)
+        // var baseinfo = result[0].body;
+        // var bannerList = result[1].body;
+        var friendLinkList = result[0].body;
         res.render('index', {
             title: '网站首页 - 江西艾麦达科技',
             initialProps: {
@@ -23,10 +42,10 @@ router.get('/', (req, res) => {
                     phone: ''
                 },
                 // bannerList: bannerList,
-                // classList: classList
+                friendLinkList: friendLinkList
             }
         });
-    // })
+    })
 });
 
 router.get('/about', (req, res) => {
