@@ -79,10 +79,10 @@ export default class extends Component {
         var pathname = window.location.pathname;
         var defaultSeletedKey = [];
         var navListDom = this.state.navList.map((item, index) => {
-            if(pathname = item.pathname)
-                defaultSeletedKey.push(index);
+            if(pathname == item.pathname)
+                defaultSeletedKey.push(index.toString());
             return (
-                <Menu.Item key={index}><a href={item.path}>{item.name}</a></Menu.Item>
+                <Menu.Item key={index}><a href={item.pathname}>{item.name}</a></Menu.Item>
             )
         })
         return (

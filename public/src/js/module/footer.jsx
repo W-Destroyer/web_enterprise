@@ -16,7 +16,7 @@ export default class extends Component {
     render() {
         return (
             <Footer className="footer text-center" style={{padding: '0'}}>
-                <div className="footer-nav" style={{padding: '30px 0', borderBottom: '1px solid #f0f2f5'}}>
+                <div className="footer-nav" style={{padding: '30px 0', borderTop: '1px solid #f0f2f5', borderBottom: '1px solid #f0f2f5'}}>
                     <div className="container">
                         <Row type="flex" justify="left" gutter={20}>
                             <Col span={4}>

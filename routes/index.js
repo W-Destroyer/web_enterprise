@@ -49,8 +49,8 @@ router.get('/', (req, res) => {
 });
 
 router.get('/about', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('about', {
+        title: '公司简介 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -64,8 +64,8 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/product', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('product', {
+        title: '产品 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -79,8 +79,8 @@ router.get('/product', (req, res) => {
 });
 
 router.get('/news', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('news', {
+        title: '网站博客 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -94,8 +94,8 @@ router.get('/news', (req, res) => {
 });
 
 router.get('/service', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('service', {
+        title: '售后服务 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -109,8 +109,8 @@ router.get('/service', (req, res) => {
 });
 
 router.get('/messages', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('message', {
+        title: '在线留言 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -124,8 +124,8 @@ router.get('/messages', (req, res) => {
 });
 
 router.get('/contact', (req, res) => {
-    res.render('index', {
-        title: '网站首页 - 江西艾麦达科技',
+    res.render('contact', {
+        title: '联系我们 - 江西艾麦达科技',
         initialProps: {
             baseinfo: {
                 title: '江西艾麦达科技',
@@ -138,4 +138,7 @@ router.get('/contact', (req, res) => {
     });
 });
 
+router.get('/shownews', (req, res) => {
+    res.render('shownews');
+})
 module.exports = router;

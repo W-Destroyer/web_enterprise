@@ -67,39 +67,39 @@ class App extends Component {
     }
 }
 
-class Partner extends Component {
-    constructor() {
-        super();
-    }
+// class Partner extends Component {
+//     constructor() {
+//         super();
+//     }
 
-    render() {
+//     render() {
 
-        return (
-            <div className="container about row-body">
-                <header >
-                    合作伙伴
-                </header>
-                <p className="describe">
-                    我们致力于让科技改善人们的生活
-                </p>
-                <div className="news-list" style={{marginTop: '30px'}}>
-                    <Row type="flex" justify="left" gutter={20}>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>1</Col>
-                        <Col span={3}>2</Col>
-                        <Col span={3}>2</Col>
-                        <Col span={3}>2</Col>
-                        <Col span={3}>2</Col>
-                    </Row>
-                </div>
-            </div>
-        )
-    }
-}
+//         return (
+//             <div className="container about row-body">
+//                 <header >
+//                     合作伙伴
+//                 </header>
+//                 <p className="describe">
+//                     我们致力于让科技改善人们的生活
+//                 </p>
+//                 <div className="news-list" style={{marginTop: '30px'}}>
+//                     <Row type="flex" justify="left" gutter={20}>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>1</Col>
+//                         <Col span={3}>2</Col>
+//                         <Col span={3}>2</Col>
+//                         <Col span={3}>2</Col>
+//                         <Col span={3}>2</Col>
+//                     </Row>
+//                 </div>
+//             </div>
+//         )
+//     }
+// }
 
 
 ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));

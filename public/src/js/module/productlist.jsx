@@ -130,7 +130,7 @@ export default class Product extends Component {
         return (
             <div className="container product row-body">
                 <header >
-                    科技产品
+                    无尘产品
                 </header>
                 <p className="describe">
                     我们致力于让科技改善人们的生活

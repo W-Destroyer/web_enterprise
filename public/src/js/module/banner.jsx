@@ -21,20 +21,17 @@ export default class Banner extends Component {
     }
 
     render() {
+        var data = this.props;
+
         return (
             <div className='banner' style={{
                 margin: '0'
             }}>
-                <Carousel autoplay autoplaySpeed='2000' beforeChange={this.beforeChange} afterChange={this.afterChange}>
+                <Carousel autoplay={false} dots={false} autoplaySpeed='2000' beforeChange={this.beforeChange} afterChange={this.afterChange}>
                     <div>
                         <img src="/images/banners/banner_1.jpg" />
                     </div>
-                    <div>
-                        <img src="/images/banners/banner_2.jpg" />
-                    </div>
-                    <div>
-                        <img src="/images/banners/banner_3.jpg" />
-                    </div>
+                    
                 </Carousel>
             </div>
         )

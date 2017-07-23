@@ -70,11 +70,14 @@ var config = {
         //     // 'webpack-dev-server/client?http://localhost:3000',
         //     // 'webpack/hot/only-dev-server'
         // ],
-        // vendor: ["_", "jquery", "react", "react-dom", "react-redux", "redux"],
-        
-        // font-end
+
         index: './public/src/js/pages/index.jsx',
-        
+        about: './public/src/js/pages/about.jsx',
+        contact: './public/src/js/pages/contact.jsx',
+        news: './public/src/js/pages/news.jsx',
+        product: './public/src/js/pages/product.jsx',
+        service: './public/src/js/pages/service.jsx',
+        message: './public/src/js/pages/message.jsx'
     },
     output: {
         path: __dirname + '/public/dist/',
