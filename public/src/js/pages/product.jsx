@@ -10,6 +10,7 @@ import { Layout, Menu, Breadcrumb, BackTop, Row, Col, Pagination } from 'antd';
 const { Content } = Layout;
 
 import '../../css/style.less';
+import '../../css/product.less';
 
 import Header from '../module/header';
 import Footer from '../module/footer';
@@ -35,6 +36,8 @@ class App extends Component {
             firendLink: data.baseinfo.friendLink
         }
         this.nav = [{
+            name: '全部'
+        }, {
             name: '防静电服系列'
         }, {
             name: '防静电鞋系列'
@@ -74,7 +77,7 @@ class App extends Component {
         var menuDom = this.nav.map((item, index) => {
             return (
                 <Menu.Item key={index}>
-                    <div style={{textAlign: 'left', paddingLeft: '20px'}}>{item.name}</div>
+                    <div className="product-nav-list">{item.name}</div>
                 </Menu.Item>
             )
         })
@@ -98,7 +101,7 @@ class App extends Component {
                                 </p>
                                 <Row type="flex" justify="left" gutter={20}>
                                     <Col span={6}>
-                                        <Menu style={{marginTop: "10px"}}>
+                                        <Menu className="product-nav" defaultSelectedKeys={['0']}>
                                             {menuDom}
                                         </Menu>
                                     </Col>

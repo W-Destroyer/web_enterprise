@@ -11,6 +11,8 @@ export class ProductNav extends Component {
     constructor() {
         super();
         this.nav = [{
+            name: '全部'
+        }, {
             name: '防静电服系列'
         }, {
             name: '防静电鞋系列'
@@ -97,6 +99,27 @@ export class ProductList extends Component {
         }, {
             name: '洁净大褂',
             imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
+        }, {
+            name: '洁净大褂',
+            imgSrc: '/images/pic1.png'
         }]
     }
     render() {
@@ -104,12 +127,14 @@ export class ProductList extends Component {
         var productListDom = productList.map((item,index) => {
             return (
                 <Col span={6} key={index}>
-                    <div className="product-item" >
-                        <div className="product-item-image" >
-                            <img src={item.imgSrc}/>
+                    <a href="#">
+                        <div className="product-item" style={{color: "#666"}} >
+                            <div className="product-item-image" >
+                                <img src={item.imgSrc}/>
+                            </div>
+                            <div className="product-item-name">{item.name}</div>
                         </div>
-                        <div className="product-item-name">{item.name}</div>
-                    </div>
+                    </a>
                 </Col>
             )
         });
