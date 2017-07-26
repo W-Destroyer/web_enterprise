@@ -6,43 +6,52 @@ var nws = require('../nws/nws');
 
 /* GET home page. */
 router.get('/', (req, res) => {
-    // var getBaseinfo = cb => {
-    //     request(nws('/getBaseinfo'), (err, result) => {
-    //         if(err) 
-    //             return cb(err);
-    //         cb(null, result);
-    //     })
-    // }
-    // var getBanner = cb => {
-    //     request(nws('/getBaseinfo'), (err, result) => {
-    //         if(err) 
-    //             return cb(err);
-    //         cb(null, result);
-    //     })
-    // }
-    var getFriendLinkList = cb => {
-        request(nws('/sysconfig/getFriendLink'), (err, result) => {
-            if(err) 
+
+    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
+        if(err)
+            return cb(err)
+        cb(null, result);
+    });
+    var listNews = cb => request(nws('/news/showCount'), (err, result1) => {
+        if(err)
+            return cb(err);
+        var data = {
+            length: result1.body.data
+        }
+        request(nws('/news/list'), data, (err, result2) => {
+            if(err)
                 return cb(err);
-            cb(null, result);
+            cb(null, result2)
         })
-    }
-    
-    async.parallel([getFriendLinkList], (err, result) => {
+    })
+    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
+        if(err) 
+            return cb(err);
+        cb(null, result);
+    })
+    var listClassify = cb => request(nws('/classify/listall'), (err, result) => {
+        if(err)
+            return cb(err)
+        cb(null, result);
+    })
+    // var abou
+    async.parallel([listFriendLink, listClassify, listBanner, listNews], (err, result) => {
         console.log(err)
-        // var baseinfo = result[0].body;
-        // var bannerList = result[1].body;
-        var friendLinkList = result[0].body;
+        var friendLinkList = JSON.parse(result[0].body);
+        var classifyList = JSON.parse(result[1].body);
+        var bannerList = JSON.parse(result[2].body);
+        var newsList = JSON.parse(result[3].body);
         res.render('index', {
             title: '网站首页 - 江西艾麦达科技',
             initialProps: {
-                baseinfo: {
+                sysconfig: {
                     title: '江西艾麦达科技',
-                    friendLink: [],
-                    phone: ''
+                    phone: '',
+                    friendLinkList: friendLinkList,
                 },
-                // bannerList: bannerList,
-                friendLinkList: friendLinkList
+                bannerList: bannerList,
+                classifyList: classifyList,
+                newsList: newsList
             }
         });
     })

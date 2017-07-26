@@ -21,17 +21,21 @@ export default class Banner extends Component {
     }
 
     render() {
-        var data = this.props;
-
+        var { data } = this.props;
+        var { list } = data;
+        var bannerDom = list.map(item => {
+            return (
+                <div key={item['s_id']}>
+                    <img src={item['s_desc']} />
+                </div>
+            )
+        })
         return (
             <div className='banner' style={{
                 margin: '0'
             }}>
-                <Carousel autoplay={false} dots={false} autoplaySpeed='2000' beforeChange={this.beforeChange} afterChange={this.afterChange}>
-                    <div>
-                        <img src="/images/banners/banner_1.jpg" />
-                    </div>
-                    
+                <Carousel autoplay autoplaySpeed='2000' beforeChange={this.beforeChange} afterChange={this.afterChange}>
+                    { bannerDom }
                 </Carousel>
             </div>
         )

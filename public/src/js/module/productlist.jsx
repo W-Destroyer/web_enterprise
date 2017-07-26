@@ -10,52 +10,53 @@ import {Row, Col, Menu, Icon} from 'antd';
 export class ProductNav extends Component {
     constructor() {
         super();
-        this.nav = [{
-            name: '全部'
-        }, {
-            name: '防静电服系列'
-        }, {
-            name: '防静电鞋系列'
-        }, {
-            name: '无尘布系列'
-        }, {
-            name: '无尘纸系列'
-        }, {
-            name: '防静电手套系列'
-        }, {
-            name: '防静电手腕带系列'
-        }, {
-            name: '防静电贴系列'
-        }, {
-            name: '防静电椅系列'
-        }, {
-            name: '胶带系列'
-        }, {
-            name: '净化棉签系列'
-        }, {
-            name: '防静电台垫系列'
-        }, {
-            name: '防静电抗疲劳地垫'
-        }, {
-            name: '防静电PVC门帘'
-        }, {
-            name: '周转车系列'
-        }, {
-            name: '防静电周转盘'
-        }, {
-            name: '离子风机'
-        }, {
-            name: '防静电镊子系列'
-        }, {
-            name: '防静电工作台系列'
-        }, ]
+        // this.nav = [{
+        //     name: '全部'
+        // }, {
+        //     name: '防静电服系列'
+        // }, {
+        //     name: '防静电鞋系列'
+        // }, {
+        //     name: '无尘布系列'
+        // }, {
+        //     name: '无尘纸系列'
+        // }, {
+        //     name: '防静电手套系列'
+        // }, {
+        //     name: '防静电手腕带系列'
+        // }, {
+        //     name: '防静电贴系列'
+        // }, {
+        //     name: '防静电椅系列'
+        // }, {
+        //     name: '胶带系列'
+        // }, {
+        //     name: '净化棉签系列'
+        // }, {
+        //     name: '防静电台垫系列'
+        // }, {
+        //     name: '防静电抗疲劳地垫'
+        // }, {
+        //     name: '防静电PVC门帘'
+        // }, {
+        //     name: '周转车系列'
+        // }, {
+        //     name: '防静电周转盘'
+        // }, {
+        //     name: '离子风机'
+        // }, {
+        //     name: '防静电镊子系列'
+        // }, {
+        //     name: '防静电工作台系列'
+        // }, ]
     }
     render() {
-        var menuItem = this.nav.map((item, index) => {
+        var { classifyList } = this.props;
+        var menuItem = classifyList.map((item, index) => {
             return (
-                <Menu.Item key={index}>
+                <Menu.Item key={item['t_id']}>
                     <div>
-                        <span>{item.name}</span>
+                        <span>{item['t_typename']}</span>
                     </div>
                 </Menu.Item>
             )
@@ -152,6 +153,8 @@ export default class Product extends Component {
 
 
     render() {
+
+        var { productData } = this.props;
         return (
             <div className="container product row-body">
                 <header >
@@ -160,7 +163,7 @@ export default class Product extends Component {
                 <p className="describe">
                     我们致力于让科技改善人们的生活
                 </p>
-                <ProductNav />
+                <ProductNav classifyList={productData.classifyList}/>
                 <ProductList />
             </div>
             

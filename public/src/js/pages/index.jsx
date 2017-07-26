@@ -27,30 +27,35 @@ class App extends Component {
         var data = this.props.data;
         console.log(data);
         var headerData = {
-            title: data.baseinfo.title
+            title: data.sysconfig.title
         }
         var footerData = {
-            firendLink: data.baseinfo.friendLink
+            friendLinkList: data.sysconfig.friendLinkList
+        }
+        var productData = {
+            classifyList: data.classifyList
+        }
+        var newsData = {
+            newsList: data.newsList
+        }
+        var bannerData = {
+            list: data.bannerList
         }
         return(
             <Layout style={{backgroundColor: "#fff"}}>
                 <Header data={headerData}/>
                 <Content style={{marginTop: 164}}>
-                    <Banner />
+                    <Banner data={bannerData}/>
                     <div style={{
                         background: '#fff',
-                        // padding: 24,
-                        // marginTop: '20px',
                         minHeight: 380,
-                        // border: '1px solid #e1e1e1'
                     }}>
                         <div className="row"></div>
                         <div className="row">
-                            <Product />
+                            <Product productData={productData}/>
                         </div>
-                        
                         <div className="row">
-                            <News />
+                            <News data={newsData}/>
                         </div>
                         <div className="row">
                             <AboutUS />
@@ -66,40 +71,5 @@ class App extends Component {
         )
     }
 }
-
-// class Partner extends Component {
-//     constructor() {
-//         super();
-//     }
-
-//     render() {
-
-//         return (
-//             <div className="container about row-body">
-//                 <header >
-//                     合作伙伴
-//                 </header>
-//                 <p className="describe">
-//                     我们致力于让科技改善人们的生活
-//                 </p>
-//                 <div className="news-list" style={{marginTop: '30px'}}>
-//                     <Row type="flex" justify="left" gutter={20}>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>1</Col>
-//                         <Col span={3}>2</Col>
-//                         <Col span={3}>2</Col>
-//                         <Col span={3}>2</Col>
-//                         <Col span={3}>2</Col>
-//                     </Row>
-//                 </div>
-//             </div>
-//         )
-//     }
-// }
-
 
 ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));

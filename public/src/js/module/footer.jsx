@@ -14,6 +14,14 @@ export default class extends Component {
     }
 
     render() {
+        const { friendLinkList } = this.props.data;
+        const friendLinkListDom = friendLinkList.map((item, index) => {
+            return (
+                <li>
+                    <a href={item['s_desc']} target="_black">{item['s_value']}</a>
+                </li>
+            )
+        })
         return (
             <Footer className="footer text-center" style={{padding: '0'}}>
                 <div className="footer-nav" style={{padding: '30px 0', borderTop: '1px solid #f0f2f5', borderBottom: '1px solid #f0f2f5'}}>
@@ -22,10 +30,7 @@ export default class extends Component {
                             <Col span={4}>
                                 <div className="footer-nav-head"><a href="/">友情链接</a></div>
                                 <ul className="footer-nav-body">
-                                    <li><a href="/">淘宝</a></li>
-                                    <li><a href="/">天猫</a></li>
-                                    <li><a href="/">京东</a></li>
-                                    <li><a href="/">亚马逊</a></li>
+                                    {friendLinkListDom}
                                 </ul>
                             </Col>
                             <Col span={4}>

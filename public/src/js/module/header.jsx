@@ -69,7 +69,7 @@ export default class extends Component {
         this.refs.logo.style.paddingLeft = 100 + offset + 'px';
         this.refs.logo.style.width = 220 + offset + 'px';
         this.refs.logo.style.height = 64 + 36 / 100 * offset + 'px';
-        console.log(this.refs.companyName.style.transform)
+        // console.log(this.refs.companyName.style.transform)
         this.refs.companyName.style.transform = 'scale(' + offset / 100 + ')';
         this.refs.companyName.style.marginTop = (offset/2 - 50) + 'px';
     }
