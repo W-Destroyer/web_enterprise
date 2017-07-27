@@ -10,46 +10,13 @@ import {Row, Col, Menu, Icon} from 'antd';
 export class ProductNav extends Component {
     constructor() {
         super();
-        // this.nav = [{
-        //     name: '全部'
-        // }, {
-        //     name: '防静电服系列'
-        // }, {
-        //     name: '防静电鞋系列'
-        // }, {
-        //     name: '无尘布系列'
-        // }, {
-        //     name: '无尘纸系列'
-        // }, {
-        //     name: '防静电手套系列'
-        // }, {
-        //     name: '防静电手腕带系列'
-        // }, {
-        //     name: '防静电贴系列'
-        // }, {
-        //     name: '防静电椅系列'
-        // }, {
-        //     name: '胶带系列'
-        // }, {
-        //     name: '净化棉签系列'
-        // }, {
-        //     name: '防静电台垫系列'
-        // }, {
-        //     name: '防静电抗疲劳地垫'
-        // }, {
-        //     name: '防静电PVC门帘'
-        // }, {
-        //     name: '周转车系列'
-        // }, {
-        //     name: '防静电周转盘'
-        // }, {
-        //     name: '离子风机'
-        // }, {
-        //     name: '防静电镊子系列'
-        // }, {
-        //     name: '防静电工作台系列'
-        // }, ]
     }
+
+    handleClick = event => {
+        this.props.handleChange(event.key);
+        // console.log(item, key, keyPath)
+    }
+
     render() {
         var { classifyList } = this.props;
         var menuItem = classifyList.map((item, index) => {
@@ -74,7 +41,10 @@ export class ProductNav extends Component {
                     display: 'flex',
                     justifyContent: 'center',
                     margin: '0 auto'
-                }} mode="horizontal" defaultSelectedKeys={['1']}>
+                }} mode="horizontal"
+                    defaultSelectedKeys={['1']}
+                    onClick={this.handleClick}
+                >
                     { menuItem }
                 </Menu>
             </div>
@@ -85,60 +55,32 @@ export class ProductNav extends Component {
 export class ProductList extends Component {
     constructor() {
         super();
-        this.productList = [{
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }, {
-            name: '洁净大褂',
-            imgSrc: '/images/pic1.png'
-        }]
+        this.productList = [];
+
+        this.state = {
+            switchCount: 0
+        }
     }
+
     render() {
-        var productList = this.productList;
-        var productListDom = productList.map((item,index) => {
+        var { productList } = this.props;
+        // console.log(this.productList)
+        var productListDom = productList.length ? productList.map((item,index) => {
             return (
-                <Col span={6} key={index}>
+                <Col span={6} key={item['p_id']}>
                     <a href="#">
                         <div className="product-item" style={{color: "#666"}} >
                             <div className="product-item-image" >
-                                <img src={item.imgSrc}/>
+                                <img src={item['p_picture']}/>
                             </div>
-                            <div className="product-item-name">{item.name}</div>
+                            <div className="product-item-name">{item['p_name']}</div>
                         </div>
                     </a>
                 </Col>
             )
-        });
+        }) : ( <Col className="product-list-none" span={24}>
+            <span>该分类暂无产品</span>
+        </Col> )
         return (
             <div className="product-list">
                 <Row type="flex" justify="left" gutter={10}>
@@ -150,7 +92,30 @@ export class ProductList extends Component {
 }
 
 export default class Product extends Component {
+    constructor() {
+        super();
+        this.state = {
+            productType: 1,
+            productList: []
+        }
+    }
 
+    componentDidMount() {
+        this.handleChange(this.state.productType);
+    }
+
+    handleChange = (type) => {
+        fetch(`/api/product/listByType?type=${type}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+
+                this.setState({
+                    productType: type,
+                    productList: res.data.productList
+                })
+            })
+    }
 
     render() {
 
@@ -163,8 +128,8 @@ export default class Product extends Component {
                 <p className="describe">
                     我们致力于让科技改善人们的生活
                 </p>
-                <ProductNav classifyList={productData.classifyList}/>
-                <ProductList />
+                <ProductNav classifyList={productData.classifyList} handleChange={(type) => this.handleChange(type)}/>
+                <ProductList productList={this.state.productList}/>
             </div>
             
         )
