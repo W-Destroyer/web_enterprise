@@ -15,11 +15,10 @@ import '../../css/product.less';
 import Header from '../module/header';
 import Footer from '../module/footer';
 import Banner from '../module/banner';
-import Product from '../module/productlist';
 import News from '../module/news';
 import AboutUS from '../module/about';
 
-import {ProductList} from '../module/productlist';
+import {ProductNav, ProductList} from '../module/productlist';
 
 class App extends Component {
     constructor() {
@@ -30,62 +29,24 @@ class App extends Component {
         var data = this.props.data;
         console.log(data);
         var headerData = {
-            title: data.baseinfo.title
+            title: data.sysconfig.title
         }
         var footerData = {
-            firendLink: data.baseinfo.friendLink
+            friendLinkList: data.sysconfig.friendLinkList
         }
-        this.nav = [{
-            name: '全部'
-        }, {
-            name: '防静电服系列'
-        }, {
-            name: '防静电鞋系列'
-        }, {
-            name: '无尘布系列'
-        }, {
-            name: '无尘纸系列'
-        }, {
-            name: '防静电手套系列'
-        }, {
-            name: '防静电手腕带系列'
-        }, {
-            name: '防静电贴系列'
-        }, {
-            name: '防静电椅系列'
-        }, {
-            name: '胶带系列'
-        }, {
-            name: '净化棉签系列'
-        }, {
-            name: '防静电台垫系列'
-        }, {
-            name: '防静电抗疲劳地垫'
-        }, {
-            name: '防静电PVC门帘'
-        }, {
-            name: '周转车系列'
-        }, {
-            name: '防静电周转盘'
-        }, {
-            name: '离子风机'
-        }, {
-            name: '防静电镊子系列'
-        }, {
-            name: '防静电工作台系列'
-        }, ]
-        var menuDom = this.nav.map((item, index) => {
-            return (
-                <Menu.Item key={index}>
-                    <div className="product-nav-list">{item.name}</div>
-                </Menu.Item>
-            )
-        })
+        var productData = {
+            classifyList: data.classifyList
+        }
+
+        var bannerData = {
+            list: data.bannerList
+        }
+
         return(
             <Layout style={{backgroundColor: "#fff"}}>
                 <Header data={headerData}/>
                 <Content style={{marginTop: 164}}>
-                    <Banner />
+                    <Banner data={bannerData}/>
                     <div style={{
                         background: '#fff',
                         minHeight: 380,
@@ -93,25 +54,8 @@ class App extends Component {
                         <div className="row"></div>
                         <div className="row">
                             <div className="container product row-body">
-                                <header >
-                                    无尘产品
-                                </header>
-                                <p className="describe">
-                                    我们致力于让科技改善人们的生活
-                                </p>
-                                <Row type="flex" justify="left" gutter={20}>
-                                    <Col span={6}>
-                                        <Menu className="product-nav" defaultSelectedKeys={['0']}>
-                                            {menuDom}
-                                        </Menu>
-                                    </Col>
-                                    <Col span={18}>
-                                        <ProductList />
-                                        <div style={{marginTop: '30px'}}>
-                                            <Pagination defaultCurrent={1} total={500} />
-                                        </div>
-                                    </Col>
-                                </Row>
+                                
+                                <Product classifyList={productData.classifyList} />
                             </div>
                         </div>
                     </div>
@@ -124,5 +68,79 @@ class App extends Component {
         )
     }
 }
+
+class Product extends Component {
+    constructor() {
+        super();
+        this.state = {
+            productType: '0',
+            productList: [],
+            total: 0
+        }
+    }
+
+    componentDidMount() {
+        this.handleClick(this.state.productType);
+    }
+
+    handleClick = type => {
+        fetch(`/api/product/listByType?type=${type}`)
+            .then(res => res.json())
+            .then(res => {
+                console.log(res)
+
+                this.setState({
+                    productType: type,
+                    productList: res.data.productList,
+                    total: res.data.total
+                })
+            })
+    }
+
+    changePage = index => {
+        this.setState({
+
+        })
+    }
+
+    render() {
+        var {classifyList} = this.props;
+        classifyList.unshift({
+            t_id: '0',
+            t_typename: '全部'
+        });
+        var menuDom = classifyList.map((item, index) => {
+            return (
+                <Menu.Item key={item['t_id']}>
+                    <div className="product-nav-list" style={{cursor: 'pointer'}} onClick={() => this.handleClick(item['t_id'])}>{item['t_typename']}</div>
+                </Menu.Item>
+            )
+        })
+        return (
+            <div>
+                <header >
+                    无尘产品
+                </header>
+                <p className="describe">
+                    我们致力于让科技改善人们的生活
+                </p>
+                <Row type="flex" justify="left" gutter={20}>
+                    <Col span={6}>
+                        <Menu className="product-nav" defaultSelectedKeys={[this.state.productType]}>
+                            {menuDom}
+                        </Menu>
+                    </Col>
+                    <Col span={18}>
+                        <ProductList productList={this.state.productList}/>
+                        {this.state.productList.length !== 0 && (<div style={{marginTop: '30px'}}>
+                            <Pagination defaultCurrent={1} total={this.state.productList.length} />
+                        </div>)}
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
+}
+
 
 ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));

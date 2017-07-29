@@ -27,22 +27,28 @@ class App extends Component {
         var data = this.props.data;
         console.log(data);
         var headerData = {
-            title: data.baseinfo.title
+            title: data.sysconfig.title
         }
         var footerData = {
-            firendLink: data.baseinfo.friendLink
+            friendLinkList: data.sysconfig.friendLinkList
+        }
+        // var productData = {
+        //     classifyList: data.classifyList
+        // }
+        // var newsData = {
+        //     newsList: data.newsList
+        // }
+        var bannerData = {
+            list: data.bannerList
         }
         return(
             <Layout style={{backgroundColor: "#fff"}}>
                 <Header data={headerData}/>
                 <Content style={{marginTop: 164}}>
-                    <Banner />
+                    <Banner data={bannerData}/>
                     <div style={{
                         background: '#fff',
-                        // padding: 24,
-                        // marginTop: '20px',
                         minHeight: 380,
-                        // border: '1px solid #e1e1e1'
                     }}>
                         <div className="row"></div>
                         <div className="row">

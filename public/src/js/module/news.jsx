@@ -69,6 +69,9 @@ export class NewsList extends Component {
         }, ]
     }
     render() {
+        var { data } = this.props;
+        // var { newsList } = data;
+        
         var newsListDom = this.newsList.map((item, index) => {
             return (
                 <Col span={12} key={index}>

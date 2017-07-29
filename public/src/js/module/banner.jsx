@@ -26,7 +26,7 @@ export default class Banner extends Component {
         var bannerDom = list.map(item => {
             return (
                 <div key={item['s_id']}>
-                    <img src={item['s_desc']} />
+                    <img src={item['s_value']} />
                 </div>
             )
         })

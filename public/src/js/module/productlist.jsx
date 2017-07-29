@@ -68,7 +68,7 @@ export class ProductList extends Component {
         var productListDom = productList.length ? productList.map((item,index) => {
             return (
                 <Col span={6} key={item['p_id']}>
-                    <a href="#">
+                    <a href={`/product/${item['p_id']}`}>
                         <div className="product-item" style={{color: "#666"}} >
                             <div className="product-item-image" >
                                 <img src={item['p_picture']}/>

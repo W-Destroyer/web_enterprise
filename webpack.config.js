@@ -76,6 +76,7 @@ var config = {
         contact: './public/src/js/pages/contact.jsx',
         news: './public/src/js/pages/news.jsx',
         product: './public/src/js/pages/product.jsx',
+        showproduct: './public/src/js/pages/showproduct.jsx',
         service: './public/src/js/pages/service.jsx',
         message: './public/src/js/pages/message.jsx'
     },
