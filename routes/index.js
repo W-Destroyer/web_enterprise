@@ -36,7 +36,6 @@ router.get('/', (req, res) => {
     })
     // var abou
     async.parallel([listFriendLink, listClassify, listBanner, listNews], (err, result) => {
-        console.log(err)
         var friendLinkList = JSON.parse(result[0].body);
         var classifyList = JSON.parse(result[1].body);
         var bannerList = JSON.parse(result[2].body);
@@ -129,9 +128,12 @@ router.get('/product', (req, res) => {
 });
 
 router.get('/product/:id', (req, res) => {
-     var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
+    var data = {
+        productId: req.params.id
+    }
+    var productInfo = cb => request(nws('/product/getdetail'), {form: data}, (err, result) => {
         if(err)
-            return cb(err)
+            return cb(err);
         cb(null, result);
     });
 
@@ -140,33 +142,25 @@ router.get('/product/:id', (req, res) => {
             return cb(err);
         cb(null, result);
     });
-    
-    var listClassify = cb => request(nws('/classify/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    })
 
-    async.parallel([listBanner, listFriendLink, listClassify], (err, result) => {
+    async.parallel([productInfo, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
+        var productInfo = JSON.parse(result[0].body);
         var friendLinkList = JSON.parse(result[1].body);
-        var classifyList = JSON.parse(result[2].body);
-
+        var title = productInfo['p_name'] + "-江西艾麦达科技";
         res.render('showproduct', {
-            title: '产品 - 江西艾麦达科技',
+            title: title,
             initialProps: {
                 sysconfig: {
                     title: '江西艾麦达科技',
                     phone: '',
                     friendLinkList: friendLinkList,
                 },
-                bannerList: bannerList,
-                classifyList: classifyList
+                productInfo: productInfo
             }
         });
     });
-})
+});
 
 router.get('/news', (req, res) => {
     var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
@@ -200,6 +194,13 @@ router.get('/news', (req, res) => {
         });
     });
 });
+
+router.get('/shownews/:id', (req, res) => {
+    var data = {
+        newsId: req.params.id
+    }
+    res.render('news');
+})
 
 router.get('/service', (req, res) => {
     var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
@@ -302,5 +303,6 @@ router.get('/contact', (req, res) => {
 
 router.get('/shownews', (req, res) => {
     res.render('shownews');
-})
+});
+
 module.exports = router;

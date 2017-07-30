@@ -25,26 +25,13 @@ var webpackPlugins = [
     //     }
     // }),
     new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
         _: 'underscore',
         "window._": "underscore",
-        "window.$": "jquery",
-        "window.jQuery": 'jquery'
     }),
     // new webpack.ResolverPlugin([
     //     new webpack.ResolverPlugin.DirectoryDescriptionFilePlugin("bower.json", ["main"])
     // ]),
-    // new HtmlWebpackPlugin({
-    //     filename: __dirname + '/views/register.html',
-    //     template: __dirname + '/public/dist/html/register.html',
-    //     chunks: ['index','register']
-    // }),
-    // new HtmlWebpackPlugin({
-    //     filename: __dirname + '/views/index.html',
-    //     template: __dirname + '/public/dist/html/index.html',
-    //     chunks: []
-    // }),
+
     // new webpack.HotModuleReplacementPlugin(),
     // new webpack.LoaderOptionsPlugin({
     //     minimize: true,
@@ -54,23 +41,12 @@ var webpackPlugins = [
     //     }
     // })
     new webpack.optimize.OccurrenceOrderPlugin()
-    // new webpack.NamedModulesPlugin(),
-    // new webpack.NoErrorsPlugin()
-
 ];
 
 var config = {
     // cache: true,
-    // context: path.join(__dirname, 'public/src/'),
     // context: __dirname,
     entry: {
-        // vendor: [
-        //     "_",
-        //     "jquery",
-        //     // 'webpack-dev-server/client?http://localhost:3000',
-        //     // 'webpack/hot/only-dev-server'
-        // ],
-
         index: './public/src/js/pages/index.jsx',
         about: './public/src/js/pages/about.jsx',
         contact: './public/src/js/pages/contact.jsx',
@@ -93,7 +69,6 @@ var config = {
         }, {
             test: /\.jsx$/,
             loader: "happypack/loader"
-            // loader: "babel-loader"
         }, {
             test: /\.html$/,
             loader: "html-loader"
@@ -107,8 +82,6 @@ var config = {
             test: /\.(jpg|png)$/,
             loader: "url-loader?limit=8192"
         }],
-        // noParse: [/public\/src\/js_components\/react\/react.js/, /public\/src\/js_components\/react\/react-dom.js/]
-        // noParse: [/node_modules\/redux\/dist\/redux.js/, /node_modules\/react-redux\/dist\/react-redux.js/]
     },
     // devtool: "inline-source-map",
     externals: {
@@ -120,7 +93,6 @@ var config = {
         'react-router-redux': 'ReactRouterRedux',
         'underscore': '_'
     },
-    // resolveLoader: { root: path.join(__dirname, "node_modules") },
     resolve: {
         modules: [process.cwd() + '/public/src/', process.cwd() + '/node_modules/', process.cwd() + '/public/src/js_components/'],
         alias: {
@@ -152,11 +124,5 @@ var config = {
     },
     plugins: webpackPlugins
 }
-
-// if(os.platform() !== 'darwin' && os.platform() !== 'linux') {
-//     config.resolve.extensions.unshift('');
-// } else if(os.platform() === 'win32') {
-//     config.resolve.extensions.unshift('');
-// }
 
 module.exports = config;
