@@ -36,7 +36,7 @@ router.get('/', (req, res) => {
     })
     // var abou
     async.parallel([listFriendLink, listClassify, listBanner, listNews], (err, result) => {
-        var friendLinkList = JSON.parse(result[0].body);
+        var friendLinkList = JSON.parse(result[0].body).data;
         var classifyList = JSON.parse(result[1].body);
         var bannerList = JSON.parse(result[2].body);
         var newsList = JSON.parse(result[3].body);
