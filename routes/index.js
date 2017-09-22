@@ -3,43 +3,39 @@ var router = express.Router();
 var async = require('async');
 var request = require('request');
 var nws = require('../nws/nws');
-
+// var rp = require('request-promise');
+var rp = require('../utils/request-promise');
 /* GET home page. */
 router.get('/', (req, res) => {
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
-    var listNews = cb => request(nws('/news/showCount'), (err, result1) => {
-        if(err)
-            return cb(err);
-        var data = {
-            length: result1.body.data
-        }
-        request(nws('/news/list'), data, (err, result2) => {
-            if(err)
-                return cb(err);
-            cb(null, result2)
-        })
-    })
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    })
-    var listClassify = cb => request(nws('/classify/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    })
-    // var abou
-    async.parallel([listFriendLink, listClassify, listBanner, listNews], (err, result) => {
-        var friendLinkList = JSON.parse(result[0].body).data;
-        var classifyList = JSON.parse(result[1].body);
-        var bannerList = JSON.parse(result[2].body);
-        var newsList = JSON.parse(result[3].body);
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
+
+    var listClassify = cb => rp(nws('/classify/listall')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
+
+    // var listNews = cb => rp(nws('/news/showCount')).then(body => {
+    //     return rp({
+    //         uri: nws('/news/list'),
+    //         qs: {
+    //             length: body.data
+    //         }
+    //     })
+    // }).then(body => {
+    //     cb(null, body.data)
+    // }).catch(err => cb(err));
+
+    async.parallel([listBanner, listFriendLink, listClassify], (err, result) => {
+        
+        var bannerList = result[0];
+        var friendLinkList = result[1];
+        var classifyList = result[2];
+        // var newsList = result[3];
         res.render('index', {
             title: '网站首页 - 江西艾麦达科技',
             initialProps: {
@@ -50,29 +46,29 @@ router.get('/', (req, res) => {
                 },
                 bannerList: bannerList,
                 classifyList: classifyList,
-                newsList: newsList
+                newsList: []//newsList
             }
         });
     })
 });
 
 router.get('/about', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
+
+    // var listClassify = cb => rp(nws('/classify/listall')).then(body => {
+    //     cb(null, body.data);
+    // }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
         res.render('about', {
             title: '公司简介 - 江西艾麦达科技',
             initialProps: {
@@ -88,29 +84,23 @@ router.get('/about', (req, res) => {
 });
 
 router.get('/product', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
-    
-    var listClassify = cb => request(nws('/classify/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    })
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
+
+    var listClassify = cb => rp(nws('/classify/listall')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink, listClassify], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
-        var classifyList = JSON.parse(result[2].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
+        var classifyList = result[2];
 
         res.render('product', {
             title: '产品 - 江西艾麦达科技',
@@ -131,23 +121,27 @@ router.get('/product/:id', (req, res) => {
     var data = {
         productId: req.params.id
     }
-    var productInfo = cb => request(nws('/product/getdetail'), {form: data}, (err, result) => {
-        if(err)
-            return cb(err);
-        cb(null, result);
+
+    var productInfo = cb => rp(nws('/product/detail'), {
+        qs: data
+    }).then(body => {
+        console.log(body);
+        cb(null, body.data);
+    }).catch(err => {
+        console.log(err)
+        cb(err)
+
     });
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([productInfo, listFriendLink], (err, result) => {
 
-        var productInfo = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
-        var title = productInfo['p_name'] + "-江西艾麦达科技";
+        var productInfo = result[0];
+        var friendLinkList = result[1];
+        var title = productInfo.name + "-江西艾麦达科技";
         res.render('showproduct', {
             title: title,
             initialProps: {
@@ -163,22 +157,18 @@ router.get('/product/:id', (req, res) => {
 });
 
 router.get('/news', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
 
         res.render('news', {
             title: '网站博客 - 江西艾麦达科技',
@@ -203,22 +193,18 @@ router.get('/shownews/:id', (req, res) => {
 })
 
 router.get('/service', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
 
         res.render('service', {
             title: '售后服务 - 江西艾麦达科技',
@@ -236,22 +222,18 @@ router.get('/service', (req, res) => {
 });
 
 router.get('/messages', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
 
         res.render('message', {
             title: '在线留言 - 江西艾麦达科技',
@@ -269,22 +251,18 @@ router.get('/messages', (req, res) => {
 });
 
 router.get('/contact', (req, res) => {
-    var listBanner = cb => request(nws('/sysconfig/banner/listall'), (err, result) => {
-        if(err)
-            return cb(err)
-        cb(null, result);
-    });
+    var listBanner = cb => rp(nws('/sysconfig/banner/list')).then(body => {
+        cb(null, body.data)
+    }).catch(err => cb(err));
 
-    var listFriendLink = cb => request(nws('/sysconfig/friendlink/listall'), (err, result) => {
-        if(err) 
-            return cb(err);
-        cb(null, result);
-    });
+    var listFriendLink = cb => rp(nws('/sysconfig/friendlink/list')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
 
     async.parallel([listBanner, listFriendLink], (err, result) => {
 
-        var bannerList = JSON.parse(result[0].body);
-        var friendLinkList = JSON.parse(result[1].body);
+        var bannerList = result[0];
+        var friendLinkList = result[1];
 
         res.render('contact', {
             title: '联系我们 - 江西艾麦达科技',
@@ -302,6 +280,13 @@ router.get('/contact', (req, res) => {
 });
 
 router.get('/shownews', (req, res) => {
+    var listBanner = cb => rp(nws('/sysconfig/banner/listall')).then(body => {
+        cb(null, body)
+    }).catch(err => cb(err));
+
+    var listFriendLink = cb => rp(nws('/sysconfig/listFriendlink')).then(body => {
+        cb(null, body.data);
+    }).catch(err => cb(err));
     res.render('shownews');
 });
 

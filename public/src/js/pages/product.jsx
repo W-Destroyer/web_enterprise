@@ -8,6 +8,7 @@ import ReactDOM from 'react-dom';
 
 import { Layout, Menu, Breadcrumb, BackTop, Row, Col, Pagination } from 'antd';
 const { Content } = Layout;
+const { SubMenu, Item } = Menu;
 
 import '../../css/style.less';
 import '../../css/product.less';
@@ -73,7 +74,7 @@ class Product extends Component {
     constructor() {
         super();
         this.state = {
-            productType: '0',
+            productType: 0,
             productList: [],
             total: 0
         }
@@ -84,7 +85,8 @@ class Product extends Component {
     }
 
     handleClick = type => {
-        fetch(`/api/product/listByType?type=${type}`)
+        type = type || 0;
+        fetch(`/api/product/list?type=${type}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res)
@@ -105,17 +107,25 @@ class Product extends Component {
 
     render() {
         var {classifyList} = this.props;
-        classifyList.unshift({
-            t_id: '0',
-            t_typename: '全部'
-        });
         var menuDom = classifyList.map((item, index) => {
             return (
-                <Menu.Item key={item['t_id']}>
-                    <div className="product-nav-list" style={{cursor: 'pointer'}} onClick={() => this.handleClick(item['t_id'])}>{item['t_typename']}</div>
-                </Menu.Item>
+                <SubMenu key={item.id} title={<div className="product-nav-list" style={{cursor: 'pointer'}}>{item.name}</div>} >
+                    {
+                        item.children ? item.children.map(child => {
+                            return (
+                                <Menu.Item key={child.id}>
+                                    <div className="product-nav-child-list" style={{cursor: 'pointer'}}>{child.name}</div>
+                                </Menu.Item>
+                            )
+                        }) : (
+                            <Item disabled> 
+                                <div className="product-nav-child-list" > 暂无分类 </div>
+                            </Item>
+                        )
+                    }
+                </SubMenu>
             )
-        })
+        });
         return (
             <div>
                 <header >
@@ -126,7 +136,15 @@ class Product extends Component {
                 </p>
                 <Row type="flex" justify="left" gutter={20}>
                     <Col span={6}>
-                        <Menu className="product-nav" defaultSelectedKeys={[this.state.productType]}>
+                        <Menu
+                            className="product-nav"
+                            defaultSelectedKeys={[this.state.productType]}
+                            mode="inline"
+                            onClick={e => this.handleClick(e.key)}
+                        >
+                            <Item key='0'>
+                                <div className="product-nav-list" style={{cursor: 'pointer'}}>全部</div>
+                            </Item>
                             {menuDom}
                         </Menu>
                     </Col>
@@ -141,6 +159,5 @@ class Product extends Component {
         )
     }
 }
-
 
 ReactDOM.render(<App data={initialProps}/>, document.getElementById('main'));

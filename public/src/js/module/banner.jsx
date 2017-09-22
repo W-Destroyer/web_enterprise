@@ -22,11 +22,10 @@ export default class Banner extends Component {
 
     render() {
         var { data } = this.props;
-        var { list } = data;
-        var bannerDom = list.map(item => {
+        var bannerDom = data.list.map(item => {
             return (
-                <div key={item['s_id']}>
-                    <img src={item['s_value']} />
+                <div key={item.id}>
+                    <img src={item.value} />
                 </div>
             )
         })

@@ -18,7 +18,7 @@ export default class extends Component {
         const friendLinkListDom = friendLinkList.map((item, index) => {
             return (
                 <li>
-                    <a href={item['s_value']} target="_black">{item['s_name']}</a>
+                    <a href={item.value} target="_black">{item.name}</a>
                 </li>
             )
         })

@@ -5,7 +5,9 @@
 
 import React, { Component } from 'react';
 
-import {Row, Col, Menu, Icon} from 'antd';
+import {Row, Col, Menu, Icon, Dropdown} from 'antd';
+
+const { SubMenu } = Menu;
 
 export class ProductNav extends Component {
     constructor() {
@@ -14,18 +16,44 @@ export class ProductNav extends Component {
 
     handleClick = event => {
         this.props.handleChange(event.key);
-        // console.log(item, key, keyPath)
     }
 
     render() {
         var { classifyList } = this.props;
-        var menuItem = classifyList.map((item, index) => {
+        var menu = classifyList.map((item, index) => {
             return (
-                <Menu.Item key={item['t_id']}>
-                    <div>
-                        <span>{item['t_typename']}</span>
-                    </div>
-                </Menu.Item>
+                <Dropdown key={item.id} overlay={
+                    <Menu onClick={this.handleClick} >
+                        {
+                            item.children ? item.children.map(child => {
+                                return (
+                                     <Menu.Item key={child.id}>
+                                        <div style={{
+                                            height: 25,
+                                            lineHeight: '25px',
+                                        }}>
+                                            <span>{child.name}</span>
+                                        </div>
+                                    </Menu.Item>
+                                )
+                            }) : (
+                                <Menu.Item disabled> 暂无分类 </Menu.Item>
+                            )
+                        }
+                    </Menu>
+                }>
+                    
+                    <a className="ant-dropdown-link" href="javascript:;">
+                        <div style={{
+                            height: 40,
+                            width: 100,
+                            lineHeight: '40px',
+                            background: 'white'
+                        }}>
+                            { item.name } <Icon type="down" />
+                        </div>
+                    </a>
+                </Dropdown>
             )
         });
         return (
@@ -35,18 +63,17 @@ export class ProductNav extends Component {
                 display: 'flex',
                 justifyContent: 'flex-start'
             }}>
-                <Menu style={{
-                    border: 'none',
-                    background: 'transparent',
-                    display: 'flex',
-                    justifyContent: 'center',
-                    margin: '0 auto'
-                }} mode="horizontal"
-                    defaultSelectedKeys={['1']}
-                    onClick={this.handleClick}
-                >
-                    { menuItem }
-                </Menu>
+                <div style={{
+                    height: 40,
+                    width: 100,
+                    lineHeight: '40px',
+                    background: 'white',
+                    color: '#0e77ca',
+                    cursor: 'pointer'
+                }} onClick={this.handleClick}>
+                    { '全部' }
+                </div>
+                {menu}
             </div>
         )
     }
@@ -67,13 +94,13 @@ export class ProductList extends Component {
         // console.log(this.productList)
         var productListDom = productList.length ? productList.map((item,index) => {
             return (
-                <Col span={6} key={item['p_id']}>
-                    <a href={`/product/${item['p_id']}`}>
+                <Col span={6} key={item.id}>
+                    <a href={`/product/${item.id}`}>
                         <div className="product-item" style={{color: "#666"}} >
                             <div className="product-item-image" >
-                                <img src={item['p_picture']}/>
+                                <img src={item.masterPic}/>
                             </div>
-                            <div className="product-item-name">{item['p_name']}</div>
+                            <div className="product-item-name">{item.name}</div>
                         </div>
                     </a>
                 </Col>
@@ -95,7 +122,7 @@ export default class Product extends Component {
     constructor() {
         super();
         this.state = {
-            productType: 1,
+            productType: 0,
             productList: []
         }
     }
@@ -105,7 +132,8 @@ export default class Product extends Component {
     }
 
     handleChange = (type) => {
-        fetch(`/api/product/listByType?type=${type}`)
+        type = type || 0;
+        fetch(`/api/product/list?type=${type}`)
             .then(res => res.json())
             .then(res => {
                 console.log(res)

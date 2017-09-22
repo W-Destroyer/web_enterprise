@@ -6,7 +6,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 
-import { Layout, Menu, Breadcrumb, BackTop, Row, Col, Pagination, Carousel, Tabs } from 'antd';
+import { Layout, Menu, Breadcrumb, BackTop, Row, Col, Pagination, Carousel, Tabs, Icon } from 'antd';
 const { Content } = Layout;
 const { TabPane } = Tabs;
 
@@ -36,13 +36,8 @@ class App extends Component {
         var footerData = {
             friendLinkList: data.sysconfig.friendLinkList
         }
-        var productData = {
-            classifyList: data.classifyList
-        }
 
-        var bannerData = {
-            list: data.bannerList
-        }
+        var productInfo = data.productInfo;
 
         return(
             <Layout style={{backgroundColor: "#fff"}}>
@@ -55,11 +50,16 @@ class App extends Component {
                         <div className="row">
                             <div className="container product row-body">
                                 <Row type="flex" justify="left" gutter={20}>
-                                    <Col span={14}>
+                                    <Col span={10}>
                                         <ProductImage />
                                     </Col>
-                                    <Col span={10} style={{textAlign: 'left', }}>
-                                        <ProductSize />
+                                    <Col span={14} style={{textAlign: 'left', }}>
+                                        <ProductSize
+                                            name={productInfo.name}
+                                            price={productInfo.price}
+                                            size={productInfo.size}
+                                            color={productInfo.color}
+                                        />
                                     </Col>
                                 </Row>
                             </div>
@@ -122,17 +122,36 @@ class ProductImage extends Component {
     render() {
         return (
             <div className="product-images">
-                <div style={{position: 'relative'}}>
+                <div style={{position: 'relative'}} className="product-images-container">
                     <Carousel 
                         ref={carousel => this.carousel = carousel.refs.slick }
                         autoplay
                         dots={true}
                         dotsClass="product-images-dots"
+                        fade={true}
                         autoplaySpeed='5000'
                         beforeChange={this.beforeChange}
                         afterChange={this.afterChange}
                     >
                         <div key='0' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='1' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='2' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='3' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='4' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='5' style={{display: 'flex', justifyContent: 'center'}}>
+                            <img src='//localhost:8080/product/pic1.png' />
+                        </div>
+                        <div key='6' style={{display: 'flex', justifyContent: 'center'}}>
                             <img src='//localhost:8080/product/pic1.png' />
                         </div>
                     </Carousel>
@@ -143,9 +162,41 @@ class ProductImage extends Component {
                         <div></div>
                     </div>
                 </div>
-                <div className="images-thumb-list" ref="imagesThumbList">
-                    <div className="list-thumb-item thumb-active" onClick={(e) => this.handleClick(e, 0)}>
-                        <img src="//localhost:8080/product/pic1.png"/>
+                <div className="images-thumb">
+                    <div className="images-thumb-left">
+                        <Icon type="left" style={{ fontSize: 24, color: '#fff' }} />
+                    </div>
+                    <div className="images-thumb-content">
+                        <div className="images-thumb-list" ref="imagesThumbList">
+                            <div className="list-thumb-item thumb-active" onClick={(e) => this.handleClick(e, 0)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 1)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 2)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 3)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 4)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 5)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 6)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+                            <div className="list-thumb-item" onClick={(e) => this.handleClick(e, 7)}>
+                                <img src="//localhost:8080/product/pic1.png"/>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div className="images-thumb-right">
+                        <Icon type="right" style={{ fontSize: 24, color: '#fff' }} />
                     </div>
                 </div>
             </div>
@@ -159,17 +210,28 @@ class ProductSize extends Component {
     }
 
     render() {
+        const { name, price, size, color } = this.props;
         return (
             <div>
-                <div clasName="product-name" style={{fontSize: '26px', marginBottom: '10px'}}>洁白大褂</div>
-                <div className="product-price" style={{padding: '20px', backgroundColor: '#fafafa', color: '#f96868', fontSize: '36px'}}>999.00元</div>
+                <div clasName="product-name" style={{fontSize: '18px', marginBottom: '10px', color: '#000'}}>{name}</div>
+                <div className="product-price" style={{padding: '20px', backgroundColor: '#fafafa', color: '#f96868', fontSize: '20px'}}>￥{price}</div>
                 <div className="product-size" style={{marginTop: '15px'}}>
-                    <div style={{color: '#9e9e9e', fontSize: '14px'}}>颜色</div>
-                    <dic>多色可选</dic>
+                    <Row>
+                        <Col span={4}><div style={{color: '#9e9e9e', fontSize: '14px'}}>颜色</div></Col>
+                        <Col span={20}><div>{color}</div></Col>
+                    </Row>
+                </div>
+                <div className="product-size" style={{marginTop: '15px'}}>
+                    <Row>
+                        <Col span={4}><div style={{color: '#9e9e9e', fontSize: '14px'}}>尺码</div></Col>
+                        <Col span={20}><div>{size}</div></Col>
+                    </Row>
                 </div>
                 <div className="product-num" style={{marginTop: '15px'}}>
-                    <div style={{color: '#9e9e9e', fontSize: '14px'}}>数量</div>
-                    <dic>不限</dic>
+                    <Row>
+                        <Col span={4}><div style={{color: '#9e9e9e', fontSize: '14px'}}>数量</div></Col>
+                        <Col span={20}><div>不限</div></Col>
+                    </Row>
                 </div>
             </div>
         )
